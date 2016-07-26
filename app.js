@@ -62,6 +62,17 @@ app.post('/books', function(req, res){
 	});
 });
 
+app.post('/book2', function(req, res){
+	Book.create(req.body, function(err, book){
+		if(err){
+			res.send('error saving book');
+		}else{
+			console.log(book);
+			res.send(book);
+		}
+	})
+})
+
 app.listen(port, function(){
 	console.log('app listening on port' + port);
 });
