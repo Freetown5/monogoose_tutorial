@@ -62,13 +62,42 @@ app.post('/books', function(req, res){
 	});
 });
 
-app.post('/book2', function(req, res){
+app.post('/books2', function(req, res){
 	Book.create(req.body, function(err, book){
 		if(err){
 			res.send('error saving book');
 		}else{
 			console.log(book);
 			res.send(book);
+		}
+	})
+})
+
+app.put('/books/:id', function(req, res){
+	Book.findOneAndUpdate({
+		_id: req.params.id
+	}, 
+	{$set: {title: req.body.title }}, 
+	{upsert: true},
+	function(err, newBook){
+		if(err){
+			console.log('error occured');
+		}else{
+			console.log(newBook);
+			res.status(newBook);
+		}
+	});
+});
+
+app.delete('/books/:id', function(req, res){
+	Book.findOneAndRemove({
+		_id: req.params.id
+	}, function(err, book){
+		if(err){
+			res.send('error deleting');
+		}else{
+			console.log(book);
+			res.status(204)
 		}
 	})
 })
