@@ -30,6 +30,19 @@ app.get('/books', function(req, res){
 	}); 
 });
 
+app.get('/books2', function(req, res){
+	console.log('books got got');
+	Book.find({})
+	.exec(function(err, books2){
+		if(err){
+			res.send('error occured');
+		}else{
+			console.log(books2);
+			res.json(books2);
+		}
+	});
+});
+
 app.get('/books/:id', function(req, res){
 	console.log('getting one book');
 	Book.findOne({
